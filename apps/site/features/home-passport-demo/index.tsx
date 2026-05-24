@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Leaf, Factory, ShieldCheck } from 'lucide-react';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
@@ -29,13 +28,7 @@ export function HomePassportDemo() {
             <div className="mx-auto max-w-6xl px-6">
                 <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
                     {/* Phone mockup */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -24 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: '-100px' }}
-                        transition={{ duration: 0.6 }}
-                        className="relative flex justify-center"
-                    >
+                    <div className="relative flex justify-center">
                         <div className="relative">
                             {/* Phone frame */}
                             <div className="bg-foreground relative w-64 rounded-[2.5rem] p-2 shadow-2xl sm:w-72">
@@ -113,36 +106,24 @@ export function HomePassportDemo() {
                             {/* Glow effect */}
                             <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-gradient-to-br from-cyan-500/10 via-transparent to-violet-500/10 blur-2xl" />
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Features list */}
                     <div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-100px' }}
-                            transition={{ duration: 0.5 }}
-                        >
+                        <div>
                             <h2 className="text-foreground text-balance text-3xl font-bold tracking-tight sm:text-4xl">
                                 Un passeport complet pour chaque pièce
                             </h2>
                             <p className="text-muted-foreground mt-4 text-lg">
                                 Scannez le QR code ou la puce NFC pour accéder instantanément à toutes les informations.
                             </p>
-                        </motion.div>
+                        </div>
 
                         <div className="mt-10 space-y-6">
-                            {features.map((feature, index) => (
-                                <motion.div
-                                    key={feature.title}
-                                    initial={{ opacity: 0, y: 16 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-50px' }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                    className="flex gap-4"
-                                >
-                                    <div className="bg-lumiris-cyan/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
-                                        <feature.icon className="text-lumiris-cyan h-5 w-5" />
+                            {features.map((feature) => (
+                                <div key={feature.title} className="flex gap-4">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
+                                        <feature.icon className="h-5 w-5 text-cyan-600" />
                                     </div>
                                     <div>
                                         <h3 className="text-foreground font-semibold">{feature.title}</h3>
@@ -150,7 +131,7 @@ export function HomePassportDemo() {
                                             {feature.description}
                                         </p>
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>

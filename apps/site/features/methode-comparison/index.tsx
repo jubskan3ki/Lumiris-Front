@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 
 const COMPARISON = [
@@ -28,20 +27,14 @@ export function MethodeComparison() {
     return (
         <section className="py-24 sm:py-32">
             <div className="mx-auto max-w-5xl px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-16 text-center"
-                >
+                <div className="mb-16 text-center">
                     <h2 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                         Comparaison avec les autres systèmes
                     </h2>
                     <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg">
                         Comment Iris se positionne par rapport aux méthodes existantes.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Comparison cards */}
                 <div className="space-y-3">
@@ -63,13 +56,9 @@ export function MethodeComparison() {
                     </div>
 
                     {/* Data rows */}
-                    {COMPARISON.map((row, index) => (
-                        <motion.div
+                    {COMPARISON.map((row) => (
+                        <div
                             key={row.criterion}
-                            initial={{ opacity: 0, x: -16 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
                             className="bg-card border-border flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:gap-4"
                         >
                             <div className="flex-1">
@@ -93,7 +82,7 @@ export function MethodeComparison() {
                                     <StatusIcon value={row.iris} />
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

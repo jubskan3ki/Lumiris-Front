@@ -1,50 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ScanLine, BarChart3, Shirt } from 'lucide-react';
-
-// Inline IrisGrade component to avoid monorepo import issues
-function IrisGrade({ grade, variant = 'badge' }: { grade: string; variant?: 'badge' | 'large' }) {
-    const colorMap: Record<string, string> = {
-        A: 'bg-emerald-500',
-        B: 'bg-lime-500',
-        C: 'bg-amber-500',
-        D: 'bg-orange-500',
-        E: 'bg-red-500',
-    };
-    const bgColor = colorMap[grade] || 'bg-muted';
-
-    if (variant === 'badge') {
-        return <span className={`${bgColor} rounded px-2 py-0.5 text-xs font-bold text-white`}>{grade}</span>;
-    }
-    return (
-        <div
-            className={`${bgColor} flex h-12 w-12 items-center justify-center rounded-xl text-xl font-bold text-white`}
-        >
-            {grade}
-        </div>
-    );
-}
 
 const DEMO_TABS = [
     {
         id: 'scan',
         label: 'Scanner',
         icon: ScanLine,
-        screen: 'scan',
+        description: "Scannez n'importe quel DPP en un instant",
     },
     {
         id: 'score',
         label: 'Score Iris',
         icon: BarChart3,
-        screen: 'score',
+        description: 'Visualisez le score Iris détaillé',
     },
     {
         id: 'wardrobe',
         label: 'Garde-Robe',
         icon: Shirt,
-        screen: 'wardrobe',
+        description: 'Gérez votre collection de pièces',
     },
 ] as const;
 
@@ -54,33 +31,21 @@ export function VisionDemo() {
     return (
         <section className="bg-muted/30 py-20 sm:py-28">
             <div className="mx-auto max-w-6xl px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-12 text-center"
-                >
+                <div className="mb-12 text-center">
                     <span className="inline-block rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-violet-600">
                         Demo
                     </span>
                     <h2 className="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                        L&apos;experience VISION
+                        L&apos;expérience VISION
                     </h2>
                     <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-                        Decouvrez les fonctionnalites cles de l&apos;application.
+                        Découvrez les fonctionnalités clés de l&apos;application.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                     {/* Vertical tabs */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -24 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: '-100px' }}
-                        transition={{ duration: 0.5 }}
-                        className="order-2 lg:order-1"
-                    >
+                    <div className="order-2 lg:order-1">
                         <div className="space-y-3">
                             {DEMO_TABS.map((tab) => (
                                 <button
@@ -89,7 +54,7 @@ export function VisionDemo() {
                                     className={`flex w-full items-center gap-4 rounded-xl p-4 text-left transition-all ${
                                         activeTab === tab.id
                                             ? 'bg-card border-2 border-violet-500/30 shadow-md'
-                                            : 'hover:bg-card/50 border border-transparent'
+                                            : 'hover:bg-card/50 border-2 border-transparent'
                                     }`}
                                 >
                                     <div
@@ -111,25 +76,15 @@ export function VisionDemo() {
                                         >
                                             {tab.label}
                                         </p>
-                                        <p className="text-muted-foreground text-sm">
-                                            {tab.id === 'scan' && "Scannez n'importe quel DPP en un instant"}
-                                            {tab.id === 'score' && 'Visualisez le score Iris detaille'}
-                                            {tab.id === 'wardrobe' && 'Gerez votre collection de pieces'}
-                                        </p>
+                                        <p className="text-muted-foreground text-sm">{tab.description}</p>
                                     </div>
                                 </button>
                             ))}
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Phone mockup */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: '-100px' }}
-                        transition={{ duration: 0.5 }}
-                        className="order-1 flex justify-center lg:order-2"
-                    >
+                    <div className="order-1 flex justify-center lg:order-2">
                         <div className="relative">
                             <div className="bg-foreground w-64 rounded-[2.5rem] p-2 shadow-2xl sm:w-72">
                                 <div className="bg-background overflow-hidden rounded-[2rem]">
@@ -157,20 +112,29 @@ export function VisionDemo() {
                                         {activeTab === 'score' && (
                                             <div className="h-full">
                                                 <div className="mb-4 flex items-center gap-3">
-                                                    <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-violet-100 to-cyan-100" />
+                                                    <div className="relative h-12 w-12 overflow-hidden rounded-lg">
+                                                        <Image
+                                                            src="/images/product-chemise.jpg"
+                                                            alt="Chemise"
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    </div>
                                                     <div className="flex-1">
                                                         <p className="text-foreground text-sm font-medium">
                                                             Chemise Lin
                                                         </p>
                                                         <p className="text-muted-foreground text-xs">Atelier Margaux</p>
                                                     </div>
-                                                    <IrisGrade grade="A" variant="badge" />
+                                                    <span className="rounded bg-emerald-500 px-2 py-0.5 text-xs font-bold text-white">
+                                                        A
+                                                    </span>
                                                 </div>
                                                 <div className="space-y-3">
                                                     {[
-                                                        { label: 'Matiere', value: 85, color: 'bg-cyan-500' },
+                                                        { label: 'Matière', value: 85, color: 'bg-cyan-500' },
                                                         { label: 'Fabrication', value: 78, color: 'bg-violet-500' },
-                                                        { label: 'Durabilite', value: 92, color: 'bg-emerald-500' },
+                                                        { label: 'Durabilité', value: 92, color: 'bg-emerald-500' },
                                                         { label: 'Social', value: 88, color: 'bg-amber-500' },
                                                     ].map((item) => (
                                                         <div key={item.label}>
@@ -198,15 +162,27 @@ export function VisionDemo() {
                                             <div className="h-full">
                                                 <p className="text-foreground mb-3 font-medium">Ma Garde-Robe</p>
                                                 <div className="grid grid-cols-2 gap-2">
-                                                    {[1, 2, 3, 4].map((i) => (
+                                                    {[
+                                                        '/images/product-chemise.jpg',
+                                                        '/images/product-pull.jpg',
+                                                        '/images/product-veste.jpg',
+                                                        '/images/product-robe.jpg',
+                                                    ].map((src, i) => (
                                                         <div
                                                             key={i}
-                                                            className="aspect-square rounded-lg bg-gradient-to-br from-slate-100 to-slate-200"
-                                                        />
+                                                            className="relative aspect-square overflow-hidden rounded-lg"
+                                                        >
+                                                            <Image
+                                                                src={src}
+                                                                alt={`Piece ${i + 1}`}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
                                                     ))}
                                                 </div>
                                                 <p className="text-muted-foreground mt-3 text-center text-xs">
-                                                    4 pieces enregistrees
+                                                    4 pièces enregistrées
                                                 </p>
                                             </div>
                                         )}
@@ -216,7 +192,7 @@ export function VisionDemo() {
                             {/* Decorative glow */}
                             <div className="pointer-events-none absolute -inset-8 -z-10 rounded-full bg-gradient-to-br from-violet-500/10 via-transparent to-cyan-500/10 blur-2xl" />
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>

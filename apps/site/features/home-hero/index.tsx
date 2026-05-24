@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, QrCode } from 'lucide-react';
@@ -27,11 +26,7 @@ export function HomeHero() {
             <div className="mx-auto w-full max-w-6xl px-6">
                 <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
                     {/* Left: Copy */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    >
+                    <div>
                         <h1 className="text-foreground text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                             Le passeport numérique du textile artisanal français
                         </h1>
@@ -54,19 +49,14 @@ export function HomeHero() {
                                 Pour les artisans
                             </Link>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Right: Product mockup */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="relative flex justify-center lg:justify-end"
-                    >
-                        <div className="float-animation relative">
+                    <div className="relative flex justify-center lg:justify-end">
+                        <div className="relative">
                             {/* Mock passport card */}
                             <div className="bg-card border-border relative w-72 overflow-hidden rounded-2xl border shadow-2xl sm:w-80">
-                                {/* Product image placeholder */}
+                                {/* Product image */}
                                 <div className="relative aspect-[4/5]">
                                     <Image
                                         src="/images/product-chemise.jpg"
@@ -94,18 +84,13 @@ export function HomeHero() {
                             {/* Decorative glow */}
                             <div className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-cyan-500/10 via-transparent to-violet-500/10 blur-xl" />
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* ESPR countdown banner */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="mt-16 lg:mt-24"
-                >
+                <div className="mt-16 lg:mt-24">
                     <div className="border-border bg-muted/30 inline-flex items-center gap-3 rounded-full border px-4 py-2">
-                        <span className="bg-lumiris-cyan/10 text-lumiris-cyan rounded-full px-2.5 py-0.5 text-xs font-semibold">
+                        <span className="rounded-full bg-cyan-500/10 px-2.5 py-0.5 text-xs font-semibold text-cyan-600">
                             ESPR
                         </span>
                         <span className="text-muted-foreground text-sm">
@@ -113,7 +98,7 @@ export function HomeHero() {
                             DPP européenne
                         </span>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

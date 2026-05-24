@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 const GRADES = [
     { grade: 'A', range: '80-100', color: 'bg-emerald-500', label: 'Excellence' },
     { grade: 'B', range: '60-79', color: 'bg-cyan-500', label: 'Très bon' },
@@ -14,32 +12,19 @@ export function MethodeGrades() {
     return (
         <section className="bg-muted/30 py-24 sm:py-32">
             <div className="mx-auto max-w-6xl px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-16 text-center"
-                >
+                <div className="mb-16 text-center">
                     <h2 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                         Échelle de notation A → E
                     </h2>
                     <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg">
                         Le score total (0-100) est converti en note lettre pour une lecture immédiate.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Grade cards */}
                 <div className="flex flex-wrap justify-center gap-4">
-                    {GRADES.map((item, index) => (
-                        <motion.div
-                            key={item.grade}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.3, delay: index * 0.08 }}
-                            className="group"
-                        >
+                    {GRADES.map((item) => (
+                        <div key={item.grade} className="group">
                             <div className="bg-card border-border flex w-28 flex-col items-center overflow-hidden rounded-2xl border transition-all hover:shadow-lg sm:w-32">
                                 {/* Grade letter */}
                                 <div className={`flex h-20 w-full items-center justify-center ${item.color} sm:h-24`}>
@@ -51,7 +36,7 @@ export function MethodeGrades() {
                                     <p className="text-muted-foreground mt-1 text-xs">{item.label}</p>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>
