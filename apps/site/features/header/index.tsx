@@ -5,14 +5,7 @@ import { motion } from 'framer-motion';
 import { Menu, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-    Sheet,
-    SheetTrigger,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetClose,
-} from '@lumiris/ui/components/sheet';
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetClose } from '@lumiris/ui/components/sheet';
 
 const navLinks = [
     { label: 'Accueil', href: '/' },
@@ -20,6 +13,7 @@ const navLinks = [
     { label: 'Vision', href: '/vision' },
     { label: 'Atelier', href: '/atelier' },
     { label: 'Méthode', href: '/methode' },
+    { label: 'Journal', href: '/journal' },
 ];
 
 const ATELIER_HREF = '/atelier';
@@ -91,7 +85,7 @@ export function Header() {
 
                 <Link
                     href={ATELIER_HREF}
-                    className="border-foreground text-foreground hidden items-center gap-1.5 rounded-xl border px-3.5 py-2 text-sm font-medium transition-colors hover:bg-foreground hover:text-background lg:inline-flex"
+                    className="border-foreground text-foreground hover:bg-foreground hover:text-background hidden items-center gap-1.5 rounded-xl border px-3.5 py-2 text-sm font-medium transition-colors lg:inline-flex"
                 >
                     Pour les artisans
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -99,10 +93,7 @@ export function Header() {
 
                 <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                     <SheetTrigger asChild>
-                        <button
-                            className="text-foreground lg:hidden"
-                            aria-label="Ouvrir le menu"
-                        >
+                        <button className="text-foreground lg:hidden" aria-label="Ouvrir le menu">
                             <Menu className="h-5 w-5" />
                         </button>
                     </SheetTrigger>
