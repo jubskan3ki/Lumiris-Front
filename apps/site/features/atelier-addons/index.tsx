@@ -1,68 +1,89 @@
 'use client';
 
-import { Info, Layers, Wrench } from 'lucide-react';
-import { Card, CardContent } from '@lumiris/ui/components/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@lumiris/ui/components/tooltip';
+import { motion } from 'framer-motion';
+import { Sparkles, Wrench, Check } from 'lucide-react';
 
-interface Addon {
-    name: string;
-    pricing: string;
-    summary: string;
-    detail: string;
-    icon: typeof Layers;
-}
-
-const ADDONS: readonly Addon[] = [
+// Hardcoded canonical addon prices: 19€/month or 190€/year each
+const ADDONS = [
     {
         name: 'ATELIER+',
-        pricing: '19 €/mois · 190 €/an',
-        summary: 'Mise en avant Discover · badge premium.',
-        detail: 'À score équivalent uniquement. Inclut le ré-engagement client après scan.',
-        icon: Layers,
+        monthly: 19,
+        yearly: 190,
+        icon: Sparkles,
+        accentClass: 'bg-violet-600',
+        accentBgClass: 'bg-violet-500/10',
+        accentTextClass: 'text-violet-600',
+        description: 'Mise en avant prioritaire dans VISION à score équivalent + analytics passeport.',
+        features: [
+            'Visibilité prioritaire dans les résultats VISION',
+            'Statistiques détaillées par passeport',
+            'Badge premium sur les fiches produit',
+            'Ré-engagement client après scan',
+        ],
     },
     {
         name: 'LUMIRIS Local',
-        pricing: '19 €/mois · 190 €/an',
-        summary: 'Profil enrichi · badge partenaire.',
-        detail: 'Remontée prioritaire dans les recherches locales. Commission 4-10 € ou 8 % du devis.',
+        monthly: 19,
+        yearly: 190,
         icon: Wrench,
+        accentClass: 'bg-pink-500',
+        accentBgClass: 'bg-pink-500/10',
+        accentTextClass: 'text-pink-500',
+        description: 'Réseau retoucheurs, couturiers et réparateurs pour prolonger la vie des pièces.',
+        features: [
+            'Profil enrichi dans l\'annuaire Local',
+            'Remontée prioritaire recherches locales',
+            'Commission 4-10 € ou 8 % du devis',
+            'Badge partenaire réparateur',
+        ],
     },
-];
+] as const;
 
 export function AtelierAddons() {
     return (
-        <TooltipProvider delayDuration={150}>
-            <ul className="grid gap-6 sm:grid-cols-2">
-                {ADDONS.map(({ name, pricing, summary, detail, icon: Icon }) => (
-                    <li key={name}>
-                        <Card className="h-full">
-                            <CardContent className="flex h-full flex-col gap-3 p-6">
-                                <div className="flex items-center gap-3">
-                                    <Icon className="text-grade-c h-5 w-5" aria-hidden="true" />
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-1.5">
-                                            <h3 className="text-foreground text-base font-semibold">{name}</h3>
-                                            <Tooltip>
-                                                <TooltipTrigger
-                                                    aria-label={`Détails ${name}`}
-                                                    className="text-muted-foreground hover:text-foreground rounded-full"
-                                                >
-                                                    <Info className="h-3.5 w-3.5" aria-hidden="true" />
-                                                </TooltipTrigger>
-                                                <TooltipContent side="top" className="max-w-xs">
-                                                    {detail}
-                                                </TooltipContent>
-                                            </Tooltip>
-                                        </div>
-                                        <p className="text-muted-foreground font-mono text-[11px]">{pricing}</p>
-                                    </div>
+        <section className="py-12">
+            <div className="grid gap-6 sm:grid-cols-2">
+                {ADDONS.map((addon, index) => (
+                    <motion.div
+                        key={addon.name}
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-50px' }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                        <div className="bg-card border-border relative h-full rounded-2xl border p-6">
+                            {/* Header */}
+                            <div className="mb-4 flex items-start gap-3">
+                                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${addon.accentBgClass}`}>
+                                    <addon.icon className={`h-5 w-5 ${addon.accentTextClass}`} />
                                 </div>
-                                <p className="text-muted-foreground text-sm leading-relaxed">{summary}</p>
-                            </CardContent>
-                        </Card>
-                    </li>
+                                <div>
+                                    <h3 className="text-foreground text-lg font-semibold">{addon.name}</h3>
+                                    <p className="text-muted-foreground font-mono text-sm">
+                                        {addon.monthly} €/mois · {addon.yearly} €/an
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{addon.description}</p>
+
+                            {/* Features */}
+                            <ul className="border-border space-y-2 border-t pt-4">
+                                {addon.features.map((feature) => (
+                                    <li key={feature} className="text-muted-foreground flex items-start gap-2 text-sm">
+                                        <Check className={`mt-0.5 h-4 w-4 shrink-0 ${addon.accentTextClass}`} />
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Accent bar at top */}
+                            <div className={`absolute left-0 right-0 top-0 h-1 rounded-t-2xl ${addon.accentClass}`} />
+                        </div>
+                    </motion.div>
                 ))}
-            </ul>
-        </TooltipProvider>
+            </div>
+        </section>
     );
 }
