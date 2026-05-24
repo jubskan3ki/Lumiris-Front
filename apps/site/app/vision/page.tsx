@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'VISION - Scanner. Comprendre. Garder. | LUMIRIS',
     description:
         "L'application mobile gratuite pour scanner n'importe quel DPP europeen, consulter le score Iris et gerer votre garde-robe textile.",
+    alternates: { canonical: '/vision' },
 };
 
 export default function VisionPage() {

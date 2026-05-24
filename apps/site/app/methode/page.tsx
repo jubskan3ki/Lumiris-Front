@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'Methodologie Iris - Score transparent et non achetable | LUMIRIS',
     description:
         'Decouvrez la methodologie Iris : un score environnemental calcule sur 4 piliers (40/25/25/10), open source, auditable et non achetable.',
+    alternates: { canonical: '/methode' },
 };
 
 export default function MethodePage() {
