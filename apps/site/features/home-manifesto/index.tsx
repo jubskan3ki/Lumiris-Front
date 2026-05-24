@@ -1,44 +1,86 @@
 'use client';
 
 const manifestoPhrases = [
-    { text: 'Chaque vêtement a une histoire.', highlight: 'LUMIRIS la rend visible.' },
-    { text: "Un score qui ne s'achète pas,", highlight: 'une traçabilité qui ne se maquille pas.' },
-    { text: "Du fil à l'armoire,", highlight: 'la transparence radicale devient la norme.' },
+    {
+        text: 'Chaque vêtement a une histoire.',
+        highlight: 'LUMIRIS la rend visible.',
+        color: 'violet',
+    },
+    {
+        text: "Un score qui ne s'achète pas,",
+        highlight: 'une traçabilité qui ne se maquille pas.',
+        color: 'cyan',
+    },
+    {
+        text: "Du fil à l'armoire,",
+        highlight: 'la transparence radicale devient la norme.',
+        color: 'pink',
+    },
 ];
 
 export function HomeManifesto() {
     return (
-        <section className="relative overflow-hidden py-24 sm:py-32">
-            {/* Background decoration */}
+        <section className="relative overflow-hidden bg-slate-50 py-24 sm:py-32">
+            {/* Background pattern */}
             <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
-                <div className="absolute left-1/4 top-0 h-full w-px bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" />
-                <div className="absolute right-1/4 top-0 h-full w-px bg-gradient-to-b from-transparent via-violet-500/10 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.05),transparent_50%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.05),transparent_50%)]" />
             </div>
 
-            <div className="mx-auto max-w-4xl px-6">
-                <div className="flex flex-col gap-10">
-                    {manifestoPhrases.map((phrase, index) => (
-                        <div key={index} className="group relative">
-                            {/* Number indicator */}
-                            <span className="text-muted-foreground/30 absolute -left-8 top-0 font-mono text-4xl font-bold sm:-left-12 sm:text-5xl">
-                                {String(index + 1).padStart(2, '0')}
-                            </span>
+            <div className="mx-auto max-w-5xl px-6">
+                {/* Section header */}
+                <div className="mb-16 text-center">
+                    <span className="text-muted-foreground mb-4 inline-block rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-violet-600">
+                        Notre manifeste
+                    </span>
+                </div>
 
-                            <p className="text-foreground pl-4 text-xl font-light leading-relaxed sm:pl-0 sm:text-2xl md:text-3xl">
-                                <span className="text-muted-foreground">{phrase.text}</span>{' '}
-                                <span className="font-medium">{phrase.highlight}</span>
-                            </p>
+                <div className="grid gap-8 md:grid-cols-3">
+                    {manifestoPhrases.map((phrase, index) => {
+                        const colorClasses = {
+                            violet: {
+                                border: 'border-violet-200',
+                                bg: 'bg-violet-50',
+                                number: 'text-violet-500',
+                                highlight: 'text-violet-700',
+                            },
+                            cyan: {
+                                border: 'border-cyan-200',
+                                bg: 'bg-cyan-50',
+                                number: 'text-cyan-500',
+                                highlight: 'text-cyan-700',
+                            },
+                            pink: {
+                                border: 'border-pink-200',
+                                bg: 'bg-pink-50',
+                                number: 'text-pink-500',
+                                highlight: 'text-pink-700',
+                            },
+                        }[phrase.color];
 
-                            {/* Decorative line */}
-                            {index < manifestoPhrases.length - 1 && (
-                                <div className="mt-10 flex items-center gap-4">
-                                    <div className="h-px flex-1 bg-gradient-to-r from-violet-500/20 to-transparent" />
-                                    <div className="h-1.5 w-1.5 rounded-full bg-violet-500/30" />
+                        return (
+                            <div
+                                key={index}
+                                className={`relative rounded-2xl border ${colorClasses.border} ${colorClasses.bg} p-6 transition-transform hover:-translate-y-1`}
+                            >
+                                {/* Number badge */}
+                                <div
+                                    className={`absolute -top-3 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-white font-mono text-sm font-bold shadow-sm ${colorClasses.number}`}
+                                >
+                                    {String(index + 1).padStart(2, '0')}
                                 </div>
-                            )}
-                        </div>
-                    ))}
+
+                                <div className="pt-4">
+                                    <p className="text-muted-foreground text-lg leading-relaxed">{phrase.text}</p>
+                                    <p
+                                        className={`mt-2 text-lg font-semibold leading-relaxed ${colorClasses.highlight}`}
+                                    >
+                                        {phrase.highlight}
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>
