@@ -18,7 +18,7 @@ const personas = [
         icon: ScanLine,
         title: 'Pour les acheteurs',
         description:
-            'Scannez n'importe quel DPP européen et découvrez le score Iris : composition, fabrication, impact environnemental et social.',
+            "Scannez n'importe quel DPP européen et découvrez le score Iris : composition, fabrication, impact environnemental et social.",
         cta: 'Découvrir VISION',
         href: '/vision',
         accent: 'violet',
