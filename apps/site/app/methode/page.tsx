@@ -7,15 +7,14 @@ import { MethodeComparison } from '@/features/methode-comparison';
 import { MethodeGovernance } from '@/features/methode-governance';
 
 export const metadata: Metadata = {
-    title: 'Méthodologie Iris — Score transparent et non achetable | LUMIRIS',
+    title: 'Methodologie Iris - Score transparent et non achetable | LUMIRIS',
     description:
-        'Découvrez la méthodologie Iris : un score environnemental calculé sur 4 piliers (40/25/25/10), open source, auditable et non achetable.',
-    alternates: { canonical: '/methode' },
+        'Decouvrez la methodologie Iris : un score environnemental calcule sur 4 piliers (40/25/25/10), open source, auditable et non achetable.',
 };
 
 export default function MethodePage() {
     return (
-        <main className="bg-background">
+        <main className="min-h-screen">
             <MethodeHero />
             <MethodePillars />
             <MethodeGrades />

@@ -35,8 +35,8 @@ export function HomeHero() {
                             Le passeport numérique du textile artisanal français
                         </h1>
                         <p className="text-muted-foreground mt-6 max-w-lg text-lg leading-relaxed">
-                            LUMIRIS trace chaque pièce de sa création à votre garde-robe. Un scan, une histoire, un score
-                            Iris transparent et non achetable.
+                            LUMIRIS trace chaque pièce de sa création à votre garde-robe. Un scan, une histoire, un
+                            score Iris transparent et non achetable.
                         </p>
                         <div className="mt-8 flex flex-wrap gap-4">
                             <Link
@@ -48,7 +48,7 @@ export function HomeHero() {
                             </Link>
                             <Link
                                 href="/atelier"
-                                className="border-border text-foreground inline-flex items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition-colors hover:bg-muted/50"
+                                className="border-border text-foreground hover:bg-muted/50 inline-flex items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition-colors"
                             >
                                 Pour les artisans
                             </Link>
@@ -70,7 +70,7 @@ export function HomeHero() {
                                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-100 via-slate-100 to-violet-100" />
                                     {/* IrisGrade overlay */}
                                     <div className="absolute left-3 top-3">
-                                        <IrisGrade grade="A" variant="badge" />
+                                        <IrisGrade grade="A" size="sm" />
                                     </div>
                                 </div>
                                 {/* Card info */}
@@ -103,8 +103,8 @@ export function HomeHero() {
                             ESPR
                         </span>
                         <span className="text-muted-foreground text-sm">
-                            <strong className="text-foreground">{daysUntilEspr} jours</strong> avant
-                            l&apos;obligation DPP européenne
+                            <strong className="text-foreground">{daysUntilEspr} jours</strong> avant l&apos;obligation
+                            DPP européenne
                         </span>
                     </div>
                 </motion.div>

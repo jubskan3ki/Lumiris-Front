@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@lumiris/ui/components
 import { mockPassportsPublic, passportPublicByArtisan } from '@lumiris/mock-data';
 import { mockArtisansWithSlug } from '@lumiris/mock-data';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
-import type { IrisGradeValue } from '@lumiris/types';
+import type { IrisGrade as IrisGradeType } from '@lumiris/types';
 
 // Categories for pieces
 const CATEGORIES = [
@@ -21,7 +21,7 @@ const CATEGORIES = [
 ] as const;
 
 // Grade filters
-const GRADES: IrisGradeValue[] = ['A', 'B', 'C', 'D', 'E'];
+const GRADES: IrisGradeType[] = ['A', 'B', 'C', 'D', 'E'];
 
 // Unique regions from artisans
 const REGIONS = Array.from(new Set(mockArtisansWithSlug.map((a) => a.region))).sort();
@@ -40,7 +40,7 @@ export function DiscoverCatalog() {
     const [activeTab, setActiveTab] = useState<'pieces' | 'ateliers'>('pieces');
 
     // Pieces filters
-    const [selectedGrades, setSelectedGrades] = useState<IrisGradeValue[]>([]);
+    const [selectedGrades, setSelectedGrades] = useState<IrisGradeType[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // Ateliers filters
@@ -53,8 +53,8 @@ export function DiscoverCatalog() {
         return mockPassportsPublic.filter((item) => {
             // Grade filter
             if (selectedGrades.length > 0) {
-                const grade = item.passport.grade ?? item.irisScore?.grade ?? 'C';
-                if (!selectedGrades.includes(grade as IrisGradeValue)) return false;
+                const grade = item.irisScore?.grade ?? 'C';
+                if (!selectedGrades.includes(grade)) return false;
             }
             // Category filter
             if (selectedCategories.length > 0) {
@@ -67,15 +67,12 @@ export function DiscoverCatalog() {
     // Filtered ateliers
     const filteredAteliers = useMemo(() => {
         return mockArtisansWithSlug.filter((artisan) => {
-            // Region filter
             if (selectedRegion && artisan.region !== selectedRegion) return false;
-            // Certification filter
             if (selectedCertification) {
                 if (selectedCertification === 'epv' && !artisan.epvLabeled) return false;
                 if (selectedCertification === 'ofg' && !artisan.ofgLabeled) return false;
                 if (selectedCertification === 'none' && (artisan.epvLabeled || artisan.ofgLabeled)) return false;
             }
-            // Specialities filter
             if (selectedSpecialities.length > 0) {
                 const hasSpec = selectedSpecialities.some((s) => artisan.specialities.includes(s));
                 if (!hasSpec) return false;
@@ -108,7 +105,7 @@ export function DiscoverCatalog() {
         setSelectedSpecialities([]);
     };
 
-    const toggleGrade = (grade: IrisGradeValue) => {
+    const toggleGrade = (grade: IrisGradeType) => {
         setSelectedGrades((prev) => (prev.includes(grade) ? prev.filter((g) => g !== grade) : [...prev, grade]));
     };
 
@@ -129,28 +126,24 @@ export function DiscoverCatalog() {
                 transition={{ duration: 0.5 }}
                 className="mb-8"
             >
-                <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Découvrir</h1>
+                <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Decouvrir</h1>
                 <p className="text-muted-foreground mt-2 text-lg">
-                    Explorez les pièces traçées et les ateliers artisans partenaires.
+                    Explorez les pieces tracees et les ateliers artisans partenaires.
                 </p>
             </motion.div>
 
             {/* Tabs */}
-            <Tabs
-                value={activeTab}
-                onValueChange={(v) => setActiveTab(v as 'pieces' | 'ateliers')}
-                className="w-full"
-            >
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'pieces' | 'ateliers')} className="w-full">
                 <TabsList className="mb-6">
                     <TabsTrigger value="pieces" className="px-4">
-                        Pièces ({mockPassportsPublic.length})
+                        Pieces ({mockPassportsPublic.length})
                     </TabsTrigger>
                     <TabsTrigger value="ateliers" className="px-4">
                         Ateliers ({mockArtisansWithSlug.length})
                     </TabsTrigger>
                 </TabsList>
 
-                {/* Pièces Tab */}
+                {/* Pieces Tab */}
                 <TabsContent value="pieces">
                     {/* Filters */}
                     <div className="mb-6 space-y-4">
@@ -174,7 +167,7 @@ export function DiscoverCatalog() {
 
                         {/* Category chips */}
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-muted-foreground text-sm">Catégorie :</span>
+                            <span className="text-muted-foreground text-sm">Categorie :</span>
                             {CATEGORIES.map((cat) => (
                                 <button
                                     key={cat.key}
@@ -193,7 +186,7 @@ export function DiscoverCatalog() {
                         {/* Reset + count */}
                         <div className="flex items-center justify-between">
                             <p className="text-muted-foreground text-sm">
-                                <strong className="text-foreground">{filteredPieces.length}</strong> pièce
+                                <strong className="text-foreground">{filteredPieces.length}</strong> piece
                                 {filteredPieces.length !== 1 ? 's' : ''}
                             </p>
                             {hasPiecesFilters && (
@@ -202,7 +195,7 @@ export function DiscoverCatalog() {
                                     className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
                                 >
                                     <X className="h-3.5 w-3.5" />
-                                    Réinitialiser
+                                    Reinitialiser
                                 </button>
                             )}
                         </div>
@@ -223,14 +216,7 @@ export function DiscoverCatalog() {
                                             <div className="relative aspect-[4/5]">
                                                 <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-cyan-50 to-violet-50" />
                                                 <div className="absolute left-2.5 top-2.5">
-                                                    <IrisGrade
-                                                        grade={
-                                                            (item.passport.grade ??
-                                                                item.irisScore?.grade ??
-                                                                'B') as IrisGradeValue
-                                                        }
-                                                        variant="badge"
-                                                    />
+                                                    <IrisGrade grade={item.irisScore?.grade ?? 'B'} size="sm" />
                                                 </div>
                                             </div>
                                             <div className="p-3">
@@ -238,7 +224,7 @@ export function DiscoverCatalog() {
                                                     {item.artisan.atelierName}
                                                 </p>
                                                 <p className="text-foreground mt-0.5 truncate text-sm font-medium">
-                                                    {item.passport.productName}
+                                                    {item.passport.garment.reference}
                                                 </p>
                                                 <Link
                                                     href={`/artisans/${item.artisan.id}`}
@@ -256,12 +242,14 @@ export function DiscoverCatalog() {
                         </div>
                     ) : (
                         <div className="py-16 text-center">
-                            <p className="text-muted-foreground">Aucune pièce ne correspond aux filtres sélectionnés.</p>
+                            <p className="text-muted-foreground">
+                                Aucune piece ne correspond aux filtres selectionnes.
+                            </p>
                             <button
                                 onClick={resetPiecesFilters}
                                 className="text-lumiris-cyan hover:text-lumiris-cyan/80 mt-3 text-sm font-medium transition-colors"
                             >
-                                Réinitialiser les filtres
+                                Reinitialiser les filtres
                             </button>
                         </div>
                     )}
@@ -278,7 +266,7 @@ export function DiscoverCatalog() {
                                 onChange={(e) => setSelectedRegion(e.target.value)}
                                 className="bg-muted text-foreground rounded-lg px-3 py-2 text-sm"
                             >
-                                <option value="">Toutes les régions</option>
+                                <option value="">Toutes les regions</option>
                                 {REGIONS.map((region) => (
                                     <option key={region} value={region}>
                                         {region}
@@ -301,7 +289,7 @@ export function DiscoverCatalog() {
 
                         {/* Speciality chips */}
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-muted-foreground text-sm">Spécialités :</span>
+                            <span className="text-muted-foreground text-sm">Specialites :</span>
                             {SPECIALITIES.slice(0, 8).map((spec) => (
                                 <button
                                     key={spec}
@@ -329,7 +317,7 @@ export function DiscoverCatalog() {
                                     className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
                                 >
                                     <X className="h-3.5 w-3.5" />
-                                    Réinitialiser
+                                    Reinitialiser
                                 </button>
                             )}
                         </div>
@@ -354,13 +342,9 @@ export function DiscoverCatalog() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ duration: 0.3, delay: index * 0.03 }}
                                                 >
-                                                    <Link
-                                                        href={`/artisans/${artisan.slug}`}
-                                                        className="group block"
-                                                    >
+                                                    <Link href={`/artisans/${artisan.slug}`} className="group block">
                                                         <div className="bg-card border-border rounded-xl border p-4 transition-shadow hover:shadow-lg">
                                                             <div className="flex gap-4">
-                                                                {/* Photo placeholder */}
                                                                 <div className="h-16 w-16 shrink-0 rounded-lg bg-gradient-to-br from-slate-200 to-slate-300" />
                                                                 <div className="flex-1">
                                                                     <div className="flex items-start justify-between gap-2">
@@ -368,45 +352,33 @@ export function DiscoverCatalog() {
                                                                             <p className="text-foreground font-semibold">
                                                                                 {artisan.atelierName}
                                                                             </p>
-                                                                            <p className="text-muted-foreground flex items-center gap-1 text-xs">
+                                                                            <p className="text-muted-foreground flex items-center gap-1 text-sm">
                                                                                 <MapPin className="h-3 w-3" />
                                                                                 {artisan.city}
                                                                             </p>
                                                                         </div>
-                                                                        <div className="flex gap-1">
-                                                                            {artisan.epvLabeled && (
-                                                                                <span className="bg-amber-100 text-amber-700 flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs font-medium">
-                                                                                    <Award className="h-3 w-3" />
-                                                                                    EPV
-                                                                                </span>
-                                                                            )}
-                                                                            {artisan.ofgLabeled && (
-                                                                                <span className="bg-emerald-100 text-emerald-700 rounded px-1.5 py-0.5 text-xs font-medium">
-                                                                                    OFG
-                                                                                </span>
-                                                                            )}
-                                                                        </div>
+                                                                        {(artisan.epvLabeled || artisan.ofgLabeled) && (
+                                                                            <div className="flex gap-1">
+                                                                                {artisan.epvLabeled && (
+                                                                                    <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700">
+                                                                                        EPV
+                                                                                    </span>
+                                                                                )}
+                                                                                {artisan.ofgLabeled && (
+                                                                                    <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-bold text-blue-700">
+                                                                                        OFG
+                                                                                    </span>
+                                                                                )}
+                                                                            </div>
+                                                                        )}
                                                                     </div>
-                                                                    <p className="text-muted-foreground mt-2 line-clamp-2 text-xs leading-relaxed">
-                                                                        {artisan.story}
+                                                                    <p className="text-muted-foreground mt-2 text-xs">
+                                                                        {artisanPieces.length} piece
+                                                                        {artisanPieces.length !== 1 ? 's' : ''} tracee
+                                                                        {artisanPieces.length !== 1 ? 's' : ''}
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            {artisanPieces.length > 0 && (
-                                                                <Link
-                                                                    href={`/decouvrir?tab=pieces&atelier=${artisan.id}`}
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        e.preventDefault();
-                                                                        setActiveTab('pieces');
-                                                                    }}
-                                                                    className="text-lumiris-cyan hover:text-lumiris-cyan/80 mt-3 inline-flex items-center gap-1 text-xs transition-colors"
-                                                                >
-                                                                    Voir ses {artisanPieces.length} pièce
-                                                                    {artisanPieces.length !== 1 ? 's' : ''}
-                                                                    <ArrowRight className="h-3 w-3" />
-                                                                </Link>
-                                                            )}
                                                         </div>
                                                     </Link>
                                                 </motion.div>
@@ -419,18 +391,39 @@ export function DiscoverCatalog() {
                     ) : (
                         <div className="py-16 text-center">
                             <p className="text-muted-foreground">
-                                Aucun atelier ne correspond aux filtres sélectionnés.
+                                Aucun atelier ne correspond aux filtres selectionnes.
                             </p>
                             <button
                                 onClick={resetAteliersFilters}
                                 className="text-lumiris-cyan hover:text-lumiris-cyan/80 mt-3 text-sm font-medium transition-colors"
                             >
-                                Réinitialiser les filtres
+                                Reinitialiser les filtres
                             </button>
                         </div>
                     )}
                 </TabsContent>
             </Tabs>
+
+            {/* Cross-link between tabs */}
+            <div className="mt-12 text-center">
+                {activeTab === 'pieces' ? (
+                    <button
+                        onClick={() => setActiveTab('ateliers')}
+                        className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
+                    >
+                        Decouvrir les ateliers partenaires
+                        <ArrowRight className="h-4 w-4" />
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => setActiveTab('pieces')}
+                        className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
+                    >
+                        Voir les pieces tracees
+                        <ArrowRight className="h-4 w-4" />
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

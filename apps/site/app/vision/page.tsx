@@ -7,15 +7,14 @@ import { VisionPrivacy } from '@/features/vision-privacy';
 import { VisionCta } from '@/features/vision-cta';
 
 export const metadata: Metadata = {
-    title: 'VISION — Scanner. Comprendre. Garder. | LUMIRIS',
+    title: 'VISION - Scanner. Comprendre. Garder. | LUMIRIS',
     description:
-        "L'application mobile gratuite pour scanner n'importe quel DPP européen, consulter le score Iris et gérer votre garde-robe textile.",
-    alternates: { canonical: '/vision' },
+        "L'application mobile gratuite pour scanner n'importe quel DPP europeen, consulter le score Iris et gerer votre garde-robe textile.",
 };
 
 export default function VisionPage() {
     return (
-        <main className="bg-background">
+        <main className="min-h-screen">
             <VisionHero />
             <VisionPromises />
             <VisionDemo />

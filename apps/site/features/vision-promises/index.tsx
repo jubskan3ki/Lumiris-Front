@@ -19,7 +19,7 @@ const PROMISES = [
     {
         icon: Shirt,
         title: 'Garde-Robe',
-        description: 'Enregistrez vos pièces, suivez leur histoire, recevez des conseils d\'entretien personnalisés.',
+        description: "Enregistrez vos pièces, suivez leur histoire, recevez des conseils d'entretien personnalisés.",
         color: 'pink',
     },
 ];
@@ -45,11 +45,12 @@ export function VisionPromises() {
 
                 <div className="grid gap-6 sm:grid-cols-3">
                     {PROMISES.map((promise, index) => {
-                        const colorClasses = {
+                        const colorMap: Record<string, { bg: string; text: string }> = {
                             violet: { bg: 'bg-violet-500/10', text: 'text-violet-600' },
                             cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-600' },
                             pink: { bg: 'bg-pink-500/10', text: 'text-pink-500' },
-                        }[promise.color];
+                        };
+                        const colorClasses = colorMap[promise.color] || colorMap.violet;
 
                         return (
                             <motion.div

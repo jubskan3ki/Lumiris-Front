@@ -7,9 +7,7 @@ import { mockPassportsPublic } from '@lumiris/mock-data';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
 
 export function HomePieces() {
-    const publishedPassports = mockPassportsPublic
-        .filter((p) => p.passport.status === 'Published')
-        .slice(0, 6);
+    const publishedPassports = mockPassportsPublic.filter((p) => p.passport.status === 'Published').slice(0, 6);
 
     return (
         <section className="py-24 sm:py-32">
@@ -39,8 +37,8 @@ export function HomePieces() {
                 </motion.div>
 
                 {/* Horizontal scroll container */}
-                <div className="mt-10 -mx-6 px-6">
-                    <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+                <div className="-mx-6 mt-10 px-6">
+                    <div className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
                         {publishedPassports.map((item, index) => (
                             <motion.div
                                 key={item.passport.id}
@@ -57,18 +55,15 @@ export function HomePieces() {
                                             <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-cyan-50 to-violet-50" />
                                             {/* IrisGrade overlay */}
                                             <div className="absolute left-2.5 top-2.5">
-                                                <IrisGrade
-                                                    grade={item.passport.grade ?? 'B'}
-                                                    variant="badge"
-                                                />
+                                                <IrisGrade grade={item.irisScore?.grade ?? 'B'} size="sm" />
                                             </div>
                                         </div>
                                         <div className="p-3">
                                             <p className="text-muted-foreground text-xs font-medium uppercase tracking-wide">
-                                                {item.artisan.name}
+                                                {item.artisan.displayName}
                                             </p>
                                             <p className="text-foreground mt-0.5 truncate text-sm font-medium">
-                                                {item.passport.productName}
+                                                {item.passport.garment.reference}
                                             </p>
                                         </div>
                                     </div>

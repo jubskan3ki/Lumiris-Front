@@ -52,7 +52,7 @@ export function HomePassportDemo() {
                                                 <p className="text-muted-foreground text-xs">Atelier Margaux</p>
                                                 <p className="text-foreground text-sm font-medium">Chemise Lin</p>
                                                 <div className="mt-1">
-                                                    <IrisGrade grade="A" variant="badge" />
+                                                    <IrisGrade grade="A" size="sm" />
                                                 </div>
                                             </div>
                                         </div>

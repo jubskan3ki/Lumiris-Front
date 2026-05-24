@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Sparkles } from 'lucide-react';
 
 const SIGNUP_URL = 'https://client.lumiris.fr';
 
@@ -13,27 +13,30 @@ const PLANS = [
         monthly: 29,
         yearly: 290,
         audience: 'Artisan seul',
-        passports: "Jusqu'à 50 passeports actifs",
-        features: ['1 utilisateur', 'OCR factures fournisseurs', 'QR + NFC GS1', 'Tableau de bord conformité'],
+        passports: "Jusqu'a 50 passeports actifs",
+        features: ['1 utilisateur', 'OCR factures fournisseurs', 'QR + NFC GS1', 'Tableau de bord conformite'],
         highlighted: false,
+        color: 'cyan',
     },
     {
         name: 'Studio',
         monthly: 79,
         yearly: 790,
-        audience: '2 à 5 personnes',
-        passports: "Jusqu'à 300 passeports actifs",
-        features: ['Multi-utilisateurs', 'Bibliothèque de matières', 'Export ESPR + AGEC', 'Support prioritaire'],
+        audience: '2 a 5 personnes',
+        passports: "Jusqu'a 300 passeports actifs",
+        features: ['Multi-utilisateurs', 'Bibliotheque de matieres', 'Export ESPR + AGEC', 'Support prioritaire'],
         highlighted: true,
+        color: 'violet',
     },
     {
         name: 'Maison',
         monthly: 149,
         yearly: 1490,
-        audience: '6 à 20 personnes',
-        passports: 'Passeports illimités',
-        features: ['Rôles & permissions', 'API privée', 'Workflows de revue', 'Account manager dédié'],
+        audience: '6 a 20 personnes',
+        passports: 'Passeports illimites',
+        features: ['Roles & permissions', 'API privee', 'Workflows de revue', 'Account manager dedie'],
         highlighted: false,
+        color: 'pink',
     },
 ] as const;
 
@@ -48,12 +51,16 @@ export function AtelierPricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.5 }}
-                    className="mb-10"
+                    className="mb-12 text-center"
                 >
-                    <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-widest">Tarifs</p>
-                    <h2 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Trois paliers</h2>
-                    <p className="text-muted-foreground mt-3">
-                        Choisissez la taille de votre atelier. Pas de coût caché.
+                    <span className="inline-block rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-violet-600">
+                        Tarifs
+                    </span>
+                    <h2 className="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+                        Choisissez votre formule
+                    </h2>
+                    <p className="text-muted-foreground mx-auto mt-3 max-w-lg">
+                        Trois paliers adaptes a la taille de votre atelier. Pas de frais caches.
                     </p>
                 </motion.div>
 
@@ -63,32 +70,39 @@ export function AtelierPricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    className="mb-10 flex items-center justify-center gap-3"
+                    className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-4"
                 >
-                    <span
-                        className={`text-sm transition-colors ${!isYearly ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
-                    >
-                        Mensuel
-                    </span>
-                    <button
-                        onClick={() => setIsYearly(!isYearly)}
-                        className={`relative h-6 w-11 rounded-full transition-colors ${isYearly ? 'bg-lumiris-cyan' : 'bg-muted'}`}
-                        aria-pressed={isYearly}
-                        aria-label="Basculer entre mensuel et annuel"
-                    >
-                        <span
-                            className={`bg-background absolute top-0.5 h-5 w-5 rounded-full shadow-sm transition-transform ${isYearly ? 'translate-x-5' : 'translate-x-0.5'}`}
-                        />
-                    </button>
-                    <span
-                        className={`text-sm transition-colors ${isYearly ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
-                    >
-                        Annuel
-                    </span>
+                    <div className="bg-muted inline-flex items-center gap-1 rounded-full p-1">
+                        <button
+                            onClick={() => setIsYearly(false)}
+                            className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                                !isYearly
+                                    ? 'bg-background text-foreground shadow-sm'
+                                    : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                        >
+                            Mensuel
+                        </button>
+                        <button
+                            onClick={() => setIsYearly(true)}
+                            className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                                isYearly
+                                    ? 'bg-background text-foreground shadow-sm'
+                                    : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                        >
+                            Annuel
+                        </button>
+                    </div>
                     {isYearly && (
-                        <span className="bg-emerald-100 text-emerald-700 ml-2 rounded-full px-2 py-0.5 text-xs font-medium">
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600"
+                        >
+                            <Sparkles className="h-3 w-3" />
                             -17% (2 mois offerts)
-                        </span>
+                        </motion.span>
                     )}
                 </motion.div>
 
@@ -101,53 +115,77 @@ export function AtelierPricing() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.4, delay: index * 0.1 }}
+                            className="relative"
                         >
-                            <div
-                                className={`bg-card border-border relative h-full rounded-2xl border p-6 ${
-                                    plan.highlighted ? 'border-lumiris-cyan/40 shadow-lg' : ''
-                                }`}
-                            >
-                                {plan.highlighted && (
-                                    <span className="bg-lumiris-cyan/10 text-lumiris-cyan absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-xs font-semibold">
+                            {plan.highlighted && (
+                                <div className="absolute -top-4 left-0 right-0 flex justify-center">
+                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-600 px-4 py-1.5 text-xs font-semibold text-white shadow-lg">
+                                        <Sparkles className="h-3 w-3" />
                                         Le plus choisi
                                     </span>
-                                )}
-
-                                <div className="mb-4">
-                                    <h3 className="text-foreground text-lg font-semibold">ATELIER {plan.name}</h3>
-                                    <p className="text-muted-foreground text-sm">{plan.audience}</p>
+                                </div>
+                            )}
+                            <div
+                                className={`bg-card h-full rounded-2xl p-6 transition-all ${
+                                    plan.highlighted
+                                        ? 'border-2 border-violet-500/50 shadow-xl shadow-violet-500/10'
+                                        : 'border-border border shadow-sm hover:shadow-md'
+                                }`}
+                            >
+                                <div className="mb-5">
+                                    <h3 className="text-foreground text-xl font-bold">ATELIER {plan.name}</h3>
+                                    <p className="text-muted-foreground mt-1 text-sm">{plan.audience}</p>
                                 </div>
 
                                 <div className="mb-6">
-                                    <p className="text-foreground text-4xl font-bold tracking-tight">
-                                        {isYearly ? plan.yearly : plan.monthly}
-                                        <span className="text-muted-foreground text-base font-normal">
-                                            {' '}
-                                            €/{isYearly ? 'an' : 'mois'}
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-foreground text-4xl font-bold tracking-tight">
+                                            {isYearly ? plan.yearly : plan.monthly}
                                         </span>
-                                    </p>
-                                    <p className="text-muted-foreground mt-1 text-sm">{plan.passports}</p>
+                                        <span className="text-muted-foreground text-lg">
+                                            EUR/{isYearly ? 'an' : 'mois'}
+                                        </span>
+                                    </div>
+                                    <p className="text-muted-foreground mt-2 text-sm">{plan.passports}</p>
                                 </div>
 
-                                <ul className="border-border mb-6 space-y-2.5 border-t pt-4">
+                                <ul className="mb-6 space-y-3">
                                     {plan.features.map((feature) => (
-                                        <li key={feature} className="text-muted-foreground flex items-start gap-2 text-sm">
-                                            <Check className="text-lumiris-cyan mt-0.5 h-4 w-4 shrink-0" />
-                                            <span>{feature}</span>
+                                        <li key={feature} className="flex items-start gap-3 text-sm">
+                                            <div
+                                                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
+                                                    plan.color === 'cyan'
+                                                        ? 'bg-cyan-500/10'
+                                                        : plan.color === 'violet'
+                                                          ? 'bg-violet-500/10'
+                                                          : 'bg-pink-500/10'
+                                                }`}
+                                            >
+                                                <Check
+                                                    className={`h-3 w-3 ${
+                                                        plan.color === 'cyan'
+                                                            ? 'text-lumiris-cyan'
+                                                            : plan.color === 'violet'
+                                                              ? 'text-violet-600'
+                                                              : 'text-pink-600'
+                                                    }`}
+                                                />
+                                            </div>
+                                            <span className="text-muted-foreground">{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
 
                                 <a
                                     href={SIGNUP_URL}
-                                    className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-medium transition-opacity hover:opacity-90 ${
+                                    className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:scale-[1.02] ${
                                         plan.highlighted
-                                            ? 'bg-foreground text-background'
-                                            : 'border-border text-foreground border hover:bg-muted/50'
+                                            ? 'bg-violet-600 text-white hover:bg-violet-700'
+                                            : 'bg-foreground text-background hover:opacity-90'
                                     }`}
                                 >
                                     Choisir {plan.name}
-                                    <ArrowRight className="h-3.5 w-3.5" />
+                                    <ArrowRight className="h-4 w-4" />
                                 </a>
                             </div>
                         </motion.div>
