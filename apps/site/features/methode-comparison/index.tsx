@@ -1,116 +1,101 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check, X, Minus } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
-const COMPARISON_DATA = [
-    {
-        criterion: 'Open source',
-        higg: false,
-        ecoscore: true,
-        autodeclaration: null,
-        iris: true,
-    },
-    {
-        criterion: 'Score non achetable',
-        higg: false,
-        ecoscore: true,
-        autodeclaration: false,
-        iris: true,
-    },
-    {
-        criterion: 'Adapté à l\'artisanat',
-        higg: false,
-        ecoscore: false,
-        autodeclaration: null,
-        iris: true,
-    },
-    {
-        criterion: 'Traçabilité vérifiable',
-        higg: true,
-        ecoscore: false,
-        autodeclaration: false,
-        iris: true,
-    },
-    {
-        criterion: 'Critères sociaux',
-        higg: true,
-        ecoscore: false,
-        autodeclaration: null,
-        iris: true,
-    },
-    {
-        criterion: 'Audit indépendant',
-        higg: true,
-        ecoscore: false,
-        autodeclaration: false,
-        iris: true,
-    },
+const COMPARISON = [
+    { criterion: 'Open source', higg: false, ecoscore: true, auto: false, iris: true },
+    { criterion: 'Score non achetable', higg: false, ecoscore: true, auto: false, iris: true },
+    { criterion: 'Adapté artisanat', higg: false, ecoscore: false, auto: false, iris: true },
+    { criterion: 'Traçabilité vérifiable', higg: true, ecoscore: false, auto: false, iris: true },
+    { criterion: 'Critères sociaux', higg: true, ecoscore: false, auto: false, iris: true },
+    { criterion: 'Audit indépendant', higg: true, ecoscore: false, auto: false, iris: true },
 ];
 
-function CellIcon({ value }: { value: boolean | null }) {
-    if (value === true) return <Check className="mx-auto h-5 w-5 text-emerald-500" />;
-    if (value === false) return <X className="mx-auto h-5 w-5 text-red-500" />;
-    return <Minus className="mx-auto h-5 w-5 text-muted-foreground" />;
+function StatusIcon({ value }: { value: boolean }) {
+    return value ? (
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10">
+            <Check className="h-4 w-4 text-emerald-500" />
+        </div>
+    ) : (
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/10">
+            <X className="h-4 w-4 text-red-500" />
+        </div>
+    );
 }
 
 export function MethodeComparison() {
     return (
-        <section className="bg-muted/30 py-20 sm:py-28">
+        <section className="py-24 sm:py-32">
             <div className="mx-auto max-w-5xl px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.5 }}
-                    className="mb-10 text-center"
+                    className="mb-16 text-center"
                 >
                     <h2 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                         Comparaison avec les autres systèmes
                     </h2>
-                    <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
+                    <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg">
                         Comment Iris se positionne par rapport aux méthodes existantes.
                     </p>
                 </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
-                    className="overflow-x-auto"
-                >
-                    <table className="bg-card border-border w-full overflow-hidden rounded-xl border">
-                        <thead>
-                            <tr className="bg-muted/50">
-                                <th className="text-foreground px-4 py-4 text-left text-sm font-semibold">Critère</th>
-                                <th className="text-muted-foreground px-4 py-4 text-center text-sm font-medium">Higg Index</th>
-                                <th className="text-muted-foreground px-4 py-4 text-center text-sm font-medium">Eco-Score</th>
-                                <th className="text-muted-foreground px-4 py-4 text-center text-sm font-medium">Auto-déclarations</th>
-                                <th className="bg-emerald-500/5 text-foreground px-4 py-4 text-center text-sm font-semibold">Iris</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {COMPARISON_DATA.map((row, index) => (
-                                <tr key={row.criterion} className={index % 2 === 0 ? '' : 'bg-muted/20'}>
-                                    <td className="text-foreground px-4 py-3 text-sm">{row.criterion}</td>
-                                    <td className="px-4 py-3 text-center">
-                                        <CellIcon value={row.higg} />
-                                    </td>
-                                    <td className="px-4 py-3 text-center">
-                                        <CellIcon value={row.ecoscore} />
-                                    </td>
-                                    <td className="px-4 py-3 text-center">
-                                        <CellIcon value={row.autodeclaration} />
-                                    </td>
-                                    <td className="bg-emerald-500/5 px-4 py-3 text-center">
-                                        <CellIcon value={row.iris} />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </motion.div>
+                {/* Comparison cards */}
+                <div className="space-y-3">
+                    {/* Header row */}
+                    <div className="hidden items-center gap-4 px-4 sm:flex">
+                        <div className="flex-1" />
+                        <div className="w-20 text-center">
+                            <span className="text-muted-foreground text-xs font-medium">Higg</span>
+                        </div>
+                        <div className="w-20 text-center">
+                            <span className="text-muted-foreground text-xs font-medium">Eco-Score</span>
+                        </div>
+                        <div className="w-20 text-center">
+                            <span className="text-muted-foreground text-xs font-medium">Auto-décl.</span>
+                        </div>
+                        <div className="w-20 text-center">
+                            <span className="text-xs font-semibold text-emerald-600">Iris</span>
+                        </div>
+                    </div>
+
+                    {/* Data rows */}
+                    {COMPARISON.map((row, index) => (
+                        <motion.div
+                            key={row.criterion}
+                            initial={{ opacity: 0, x: -16 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            className="bg-card border-border flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center sm:gap-4"
+                        >
+                            <div className="flex-1">
+                                <span className="text-foreground text-sm font-medium">{row.criterion}</span>
+                            </div>
+                            <div className="flex items-center gap-4 sm:gap-0">
+                                <div className="flex w-20 flex-col items-center gap-1 sm:gap-0">
+                                    <span className="text-muted-foreground text-[10px] sm:hidden">Higg</span>
+                                    <StatusIcon value={row.higg} />
+                                </div>
+                                <div className="flex w-20 flex-col items-center gap-1 sm:gap-0">
+                                    <span className="text-muted-foreground text-[10px] sm:hidden">Eco-Score</span>
+                                    <StatusIcon value={row.ecoscore} />
+                                </div>
+                                <div className="flex w-20 flex-col items-center gap-1 sm:gap-0">
+                                    <span className="text-muted-foreground text-[10px] sm:hidden">Auto-décl.</span>
+                                    <StatusIcon value={row.auto} />
+                                </div>
+                                <div className="flex w-20 flex-col items-center gap-1 rounded-lg bg-emerald-500/5 py-1 sm:gap-0">
+                                    <span className="text-[10px] text-emerald-600 sm:hidden">Iris</span>
+                                    <StatusIcon value={row.iris} />
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );

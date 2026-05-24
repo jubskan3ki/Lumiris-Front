@@ -2,194 +2,128 @@
 
 import { motion } from 'framer-motion';
 
-// Inline IRIS_PILLARS data to avoid monorepo import issues
-const IRIS_PILLARS = [
+const PILLARS = [
     {
         id: 'transparency',
         label: 'Transparence',
         weight: 40,
-        description: 'Tracabilite complete des matieres et etapes de fabrication.',
+        color: 'cyan',
+        description: 'Traçabilité complète des matières et étapes de fabrication.',
+        icon: '◈',
     },
     {
         id: 'craftsmanship',
         label: 'Savoir-faire',
         weight: 25,
-        description: "Certifications, gestes manuels et anciennete de l'atelier.",
+        color: 'violet',
+        description: "Certifications, gestes manuels et ancienneté de l'atelier.",
+        icon: '✦',
     },
     {
         id: 'impact',
         label: 'Impact',
         weight: 25,
-        description: 'Empreinte environnementale des fibres, energie et transport.',
+        color: 'emerald',
+        description: 'Empreinte environnementale des fibres, énergie et transport.',
+        icon: '○',
     },
     {
         id: 'repairability',
-        label: 'Reparabilite',
+        label: 'Réparabilité',
         weight: 10,
-        description: 'Pieces detachees, guide entretien et reseau reparateurs.',
+        color: 'amber',
+        description: 'Pièces détachées, guide entretien et réseau réparateurs.',
+        icon: '◇',
     },
 ] as const;
 
-// Colors for each pillar
-const PILLAR_COLORS = {
-    transparency: { bg: 'bg-cyan-500', light: 'bg-cyan-500/10', text: 'text-cyan-600' },
-    craftsmanship: { bg: 'bg-violet-500', light: 'bg-violet-500/10', text: 'text-violet-600' },
-    impact: { bg: 'bg-emerald-500', light: 'bg-emerald-500/10', text: 'text-emerald-600' },
-    repairability: { bg: 'bg-amber-500', light: 'bg-amber-500/10', text: 'text-amber-600' },
-} as const;
-
-// Sub-criteria for each pillar
-const SUB_CRITERIA = {
-    transparency: [
-        { name: 'Composition matieres', weight: 15 },
-        { name: 'Etapes fabrication', weight: 10 },
-        { name: 'Lieu de production', weight: 8 },
-        { name: 'Prix detaille', weight: 4 },
-        { name: 'Medias / photos', weight: 3 },
-    ],
-    craftsmanship: [
-        { name: 'Certifications metier', weight: 10 },
-        { name: 'Gestes manuels', weight: 8 },
-        { name: 'Anciennete atelier', weight: 4 },
-        { name: 'Formation', weight: 3 },
-    ],
-    impact: [
-        { name: 'Impact fibres (ADEME)', weight: 10 },
-        { name: 'Energie production', weight: 6 },
-        { name: 'Transport', weight: 5 },
-        { name: 'Eau & chimie', weight: 4 },
-    ],
-    repairability: [
-        { name: 'Pieces detachees', weight: 4 },
-        { name: 'Guide entretien', weight: 3 },
-        { name: 'Garantie', weight: 2 },
-        { name: 'Reseau reparateurs', weight: 1 },
-    ],
-} as const;
-
 export function MethodePillars() {
     return (
-        <section className="py-20 sm:py-28">
+        <section className="py-24 sm:py-32">
             <div className="mx-auto max-w-6xl px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.5 }}
-                    className="mb-12 text-center"
+                    className="mb-16 text-center"
                 >
-                    <span className="inline-block rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-emerald-600">
-                        Methodologie
-                    </span>
-                    <h2 className="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+                    <h2 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                         4 piliers, 100 points
                     </h2>
-                    <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-                        Chaque passeport est evalue sur 4 axes avec des ponderations fixes.
+                    <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg">
+                        Chaque passeport est évalué sur 4 axes avec des pondérations fixes et transparentes.
                     </p>
                 </motion.div>
 
-                {/* Segmented bar */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
-                    className="mb-12"
-                >
-                    <div className="flex h-8 overflow-hidden rounded-full shadow-inner">
-                        {IRIS_PILLARS.map((pillar) => {
-                            const colors = PILLAR_COLORS[pillar.id as keyof typeof PILLAR_COLORS];
-                            return (
-                                <div
-                                    key={pillar.id}
-                                    className={`flex items-center justify-center text-sm font-bold text-white ${colors.bg}`}
-                                    style={{ width: `${pillar.weight}%` }}
-                                >
-                                    {pillar.weight}%
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="mt-3 flex">
-                        {IRIS_PILLARS.map((pillar) => {
-                            const colors = PILLAR_COLORS[pillar.id as keyof typeof PILLAR_COLORS];
-                            return (
-                                <div key={pillar.id} className="text-center" style={{ width: `${pillar.weight}%` }}>
-                                    <p className={`text-sm font-semibold ${colors.text}`}>{pillar.label}</p>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </motion.div>
-
-                {/* Pillar cards with sub-criteria */}
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {IRIS_PILLARS.map((pillar, index) => {
-                        const colors = PILLAR_COLORS[pillar.id as keyof typeof PILLAR_COLORS];
-                        const subCriteria = SUB_CRITERIA[pillar.id as keyof typeof SUB_CRITERIA];
+                {/* Modern pillar cards */}
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {PILLARS.map((pillar, index) => {
+                        const colorClasses = {
+                            cyan: {
+                                bg: 'bg-cyan-500',
+                                light: 'bg-cyan-500/10',
+                                text: 'text-cyan-500',
+                                border: 'border-cyan-500/20',
+                            },
+                            violet: {
+                                bg: 'bg-violet-500',
+                                light: 'bg-violet-500/10',
+                                text: 'text-violet-500',
+                                border: 'border-violet-500/20',
+                            },
+                            emerald: {
+                                bg: 'bg-emerald-500',
+                                light: 'bg-emerald-500/10',
+                                text: 'text-emerald-500',
+                                border: 'border-emerald-500/20',
+                            },
+                            amber: {
+                                bg: 'bg-amber-500',
+                                light: 'bg-amber-500/10',
+                                text: 'text-amber-500',
+                                border: 'border-amber-500/20',
+                            },
+                        }[pillar.color];
 
                         return (
                             <motion.div
                                 key={pillar.id}
-                                initial={{ opacity: 0, y: 16 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-50px' }}
                                 transition={{ duration: 0.4, delay: index * 0.1 }}
+                                className={`group relative overflow-hidden rounded-2xl border ${colorClasses.border} bg-card p-6 transition-all hover:shadow-lg`}
                             >
+                                {/* Weight badge */}
                                 <div
-                                    className={`bg-card h-full overflow-hidden rounded-2xl border-2 transition-shadow hover:shadow-lg ${
-                                        pillar.id === 'transparency'
-                                            ? 'border-cyan-500/30'
-                                            : pillar.id === 'craftsmanship'
-                                              ? 'border-violet-500/30'
-                                              : pillar.id === 'impact'
-                                                ? 'border-emerald-500/30'
-                                                : 'border-amber-500/30'
-                                    }`}
+                                    className={`absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full ${colorClasses.light}`}
                                 >
-                                    {/* Colored top bar */}
-                                    <div className={`h-1.5 ${colors.bg}`} />
-                                    <div className="p-5">
-                                        <div className="flex items-center justify-between">
-                                            <div
-                                                className={`flex h-12 w-12 items-center justify-center rounded-xl ${colors.light}`}
-                                            >
-                                                <span className={`text-xl font-bold ${colors.text}`}>
-                                                    {pillar.weight}
-                                                </span>
-                                            </div>
-                                            <span
-                                                className={`rounded-full px-2.5 py-1 text-xs font-bold ${colors.light} ${colors.text}`}
-                                            >
-                                                {pillar.weight}%
-                                            </span>
-                                        </div>
-                                        <h3 className="text-foreground mt-4 text-lg font-bold">{pillar.label}</h3>
-                                        <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                                            {pillar.description}
-                                        </p>
+                                    <span className={`text-lg font-bold ${colorClasses.text}`}>{pillar.weight}</span>
+                                </div>
 
-                                        {/* Sub-criteria */}
-                                        <div className="border-border mt-5 border-t pt-4">
-                                            <p className="text-muted-foreground mb-3 text-xs font-semibold uppercase tracking-wider">
-                                                Sous-criteres
-                                            </p>
-                                            <ul className="space-y-2">
-                                                {subCriteria.map((sub) => (
-                                                    <li
-                                                        key={sub.name}
-                                                        className="flex items-center justify-between text-sm"
-                                                    >
-                                                        <span className="text-muted-foreground">{sub.name}</span>
-                                                        <span className={`font-mono font-semibold ${colors.text}`}>
-                                                            {sub.weight}
-                                                        </span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                {/* Icon */}
+                                <div className={`mb-4 text-3xl ${colorClasses.text}`}>{pillar.icon}</div>
+
+                                {/* Label */}
+                                <h3 className="text-foreground text-xl font-semibold">{pillar.label}</h3>
+
+                                {/* Description */}
+                                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                                    {pillar.description}
+                                </p>
+
+                                {/* Weight indicator line */}
+                                <div className="mt-6">
+                                    <div className="bg-muted h-1 w-full overflow-hidden rounded-full">
+                                        <div
+                                            className={`h-full ${colorClasses.bg} transition-all duration-500`}
+                                            style={{ width: `${pillar.weight}%` }}
+                                        />
                                     </div>
+                                    <p className={`mt-2 text-xs font-medium ${colorClasses.text}`}>
+                                        {pillar.weight} points sur 100
+                                    </p>
                                 </div>
                             </motion.div>
                         );

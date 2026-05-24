@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, QrCode } from 'lucide-react';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
 
@@ -67,7 +68,12 @@ export function HomeHero() {
                             <div className="bg-card border-border relative w-72 overflow-hidden rounded-2xl border shadow-2xl sm:w-80">
                                 {/* Product image placeholder */}
                                 <div className="relative aspect-[4/5]">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-100 via-slate-100 to-violet-100" />
+                                    <Image
+                                        src="/images/product-chemise.jpg"
+                                        alt="Chemise Lin Naturel"
+                                        fill
+                                        className="object-cover"
+                                    />
                                     {/* IrisGrade overlay */}
                                     <div className="absolute left-3 top-3">
                                         <IrisGrade grade="A" size="sm" />

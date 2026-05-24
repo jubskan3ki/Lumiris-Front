@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Leaf, Factory, ShieldCheck } from 'lucide-react';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
 
@@ -47,7 +48,14 @@ export function HomePassportDemo() {
                                     <div className="p-4">
                                         {/* Product header */}
                                         <div className="flex items-start gap-3">
-                                            <div className="h-16 w-16 rounded-lg bg-gradient-to-br from-cyan-100 to-violet-100" />
+                                            <div className="relative h-16 w-16 overflow-hidden rounded-lg">
+                                                <Image
+                                                    src="/images/product-chemise.jpg"
+                                                    alt="Chemise Lin"
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
                                             <div className="flex-1">
                                                 <p className="text-muted-foreground text-xs">Atelier Margaux</p>
                                                 <p className="text-foreground text-sm font-medium">Chemise Lin</p>

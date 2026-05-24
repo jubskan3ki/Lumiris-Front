@@ -2,13 +2,46 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { mockPassportsPublic } from '@lumiris/mock-data';
 import { IrisGrade } from '@lumiris/scoring-ui/components/iris-grade';
 
-export function HomePieces() {
-    const publishedPassports = mockPassportsPublic.filter((p) => p.passport.status === 'Published').slice(0, 6);
+const FEATURED_PIECES = [
+    {
+        id: '1',
+        name: 'Chemise Lin Naturel',
+        artisan: 'Marie Le Goff',
+        grade: 'A' as const,
+        image: '/images/product-chemise.jpg',
+        ref: 'CHE-NAB-001',
+    },
+    {
+        id: '2',
+        name: 'Pull Mérinos',
+        artisan: 'Amélie Barthier',
+        grade: 'A' as const,
+        image: '/images/product-pull.jpg',
+        ref: 'BIO-AME-001',
+    },
+    {
+        id: '3',
+        name: 'Veste Artisanale',
+        artisan: 'Paul Chevreau',
+        grade: 'B' as const,
+        image: '/images/product-veste.jpg',
+        ref: 'PORT-PAU-001',
+    },
+    {
+        id: '4',
+        name: 'Robe Lin Été',
+        artisan: 'Maison Lumière',
+        grade: 'A' as const,
+        image: '/images/product-robe.jpg',
+        ref: 'VES-LAU-001',
+    },
+];
 
+export function HomePieces() {
     return (
         <section className="py-24 sm:py-32">
             <div className="mx-auto max-w-6xl px-6">
@@ -36,45 +69,45 @@ export function HomePieces() {
                     </Link>
                 </motion.div>
 
-                {/* Horizontal scroll container */}
-                <div className="-mx-6 mt-10 px-6">
-                    <div className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
-                        {publishedPassports.map((item, index) => (
-                            <motion.div
-                                key={item.passport.id}
-                                initial={{ opacity: 0, y: 16 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={{ duration: 0.4, delay: index * 0.05 }}
-                                className="w-56 flex-shrink-0 snap-start sm:w-64"
-                            >
-                                <Link href={`/passeport/${item.passport.id}`} className="group block">
-                                    {/* Polaroid-style card */}
-                                    <div className="bg-card border-border overflow-hidden rounded-xl border transition-shadow hover:shadow-lg">
-                                        <div className="relative aspect-[4/5]">
-                                            <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-cyan-50 to-violet-50" />
-                                            {/* IrisGrade overlay */}
-                                            <div className="absolute left-2.5 top-2.5">
-                                                <IrisGrade grade={item.irisScore?.grade ?? 'B'} size="sm" />
-                                            </div>
-                                        </div>
-                                        <div className="p-3">
-                                            <p className="text-muted-foreground text-xs font-medium uppercase tracking-wide">
-                                                {item.artisan.displayName}
-                                            </p>
-                                            <p className="text-foreground mt-0.5 truncate text-sm font-medium">
-                                                {item.passport.garment.reference}
-                                            </p>
+                {/* Grid of pieces */}
+                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {FEATURED_PIECES.map((item, index) => (
+                        <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.4, delay: index * 0.08 }}
+                        >
+                            <Link href={`/passeport/${item.id}`} className="group block">
+                                <div className="bg-card border-border overflow-hidden rounded-2xl border transition-all hover:shadow-lg">
+                                    <div className="relative aspect-[4/5]">
+                                        <Image
+                                            src={item.image}
+                                            alt={item.name}
+                                            fill
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        />
+                                        {/* IrisGrade overlay */}
+                                        <div className="absolute left-3 top-3">
+                                            <IrisGrade grade={item.grade} size="sm" />
                                         </div>
                                     </div>
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </div>
+                                    <div className="p-4">
+                                        <p className="text-muted-foreground text-xs font-medium uppercase tracking-wide">
+                                            {item.artisan}
+                                        </p>
+                                        <p className="text-foreground mt-1 font-medium">{item.name}</p>
+                                        <p className="text-muted-foreground mt-0.5 font-mono text-xs">{item.ref}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </motion.div>
+                    ))}
                 </div>
 
                 {/* Mobile "Tout voir" link */}
-                <div className="mt-6 text-center sm:hidden">
+                <div className="mt-8 text-center sm:hidden">
                     <Link
                         href="/decouvrir"
                         className="text-lumiris-cyan hover:text-lumiris-cyan/80 inline-flex items-center gap-1 text-sm font-medium transition-colors"
