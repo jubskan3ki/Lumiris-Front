@@ -225,7 +225,6 @@ function AppearanceSection({ settings }: { settings: Settings }) {
 }
 
 const NOTIFS: ReadonlyArray<{ key: keyof Settings; label: string }> = [
-    { key: 'notifNewArticles', label: 'Nouveaux articles Journal' },
     { key: 'notifNewArtisans', label: 'Nouveaux passeports d’artisans suivis' },
     { key: 'notifReminders', label: 'Rappels d’entretien Garde-Robe' },
 ];

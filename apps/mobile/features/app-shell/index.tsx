@@ -4,12 +4,12 @@ import { useEffect, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Scan, Archive, MapPin, Sparkles, User } from 'lucide-react';
+import { Scan, Archive, MapPin, User } from 'lucide-react';
 import { fadeInOut, SPRING_INDICATOR, SPRING_TAB } from '@/lib/motion';
 import { migrateLegacyKeys } from '@/lib/migrate-legacy-keys';
 import { OfflineBanner } from './offline-banner';
 
-type Tab = 'scan' | 'vault' | 'local' | 'discover' | 'me';
+type Tab = 'scan' | 'vault' | 'local' | 'me';
 
 interface TabConfig {
     id: Tab;
@@ -20,10 +20,9 @@ interface TabConfig {
 
 const TABS: readonly TabConfig[] = [
     { id: 'scan', href: '/', label: 'Scan', Icon: Scan },
-    { id: 'vault', href: '/vault', label: 'Vault', Icon: Archive },
+    { id: 'vault', href: '/vault', label: 'Garde-Robe', Icon: Archive },
     { id: 'local', href: '/local', label: 'Local', Icon: MapPin },
-    { id: 'discover', href: '/discover', label: 'Discover', Icon: Sparkles },
-    { id: 'me', href: '/me', label: 'Me', Icon: User },
+    { id: 'me', href: '/me', label: 'Moi', Icon: User },
 ];
 
 function activeTabFor(pathname: string): Tab | null {
@@ -37,9 +36,6 @@ function activeTabFor(pathname: string): Tab | null {
         pathname.startsWith('/retoucheurs')
     ) {
         return 'local';
-    }
-    if (pathname === '/discover' || pathname.startsWith('/discover/') || pathname.startsWith('/journal/')) {
-        return 'discover';
     }
     if (pathname === '/me' || pathname.startsWith('/me/') || pathname === '/about' || pathname === '/help') {
         return 'me';
