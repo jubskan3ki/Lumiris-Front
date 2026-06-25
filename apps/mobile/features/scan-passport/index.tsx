@@ -200,7 +200,7 @@ export function ScanPassport() {
                 <IrisRing status={status} />
             </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center px-6 pb-[max(env(safe-area-inset-bottom),1.5rem)]">
+            <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center px-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)]">
                 <button
                     type="button"
                     onClick={openManualEntry}
